@@ -8,11 +8,6 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { users } from './users/users.model';
 import { ConfigModule } from '@nestjs/config';
-<<<<<<< HEAD
-=======
-import * as process from 'process';
-
->>>>>>> origin/main
 @Module({
   imports: [
     SequelizeModule.forRoot({
