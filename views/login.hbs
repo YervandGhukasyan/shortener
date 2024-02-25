@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Shortener</title>
+  <link rel="stylesheet" href="/styles/index.css">
+
+</head>
+<body>
+
+<div class="container">
+  <div class="login form">
+    <header>Login</header>
+    <form action="#" class="signin-form">
+      <input type="text" id="user_signin" placeholder="Enter your email">
+      <input type="password" id="pass_signin" placeholder="Enter your password">
+      <a href="#">Forgot password?</a>
+      <button type="submit" class="button">
+
+        Login
+      </button>
+    </form>
+    <div class="signup">
+        <span class="signup">Don't have an account?
+         <label for="check">Signup</label>
+        </span>
+    </div>
+  </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+<script>
+  // Assuming you have a login form with username and password inputs
+
+  // const signupForm = document.getElementById("signupButton");
+
+
+  const signinButton = document.querySelector(".button[type='submit']");
+
+  signinButton.addEventListener("click", signin);
+
+  async function signin(event) {
+
+
+    const signinForm = document.querySelector(".signin-form");
+
+
+    const formData = new FormData(signinForm);
+    console.log(formData);
+
+    //
+    //
+    // const username = document.getElementById("user_signin").value;
+    // const password = document.getElementById("pass_signin").value;
+    //
+    // try {
+    //   const response = await fetch("http://localhost:3000/auth/signin", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json"
+    //     },
+    //     body: JSON.stringify({ username, password })
+    //   });
+    //
+    //   if (!response.ok) {
+    //     throw new Error("Login failed");
+    //   }
+    //
+    //   const data = await response.json();
+    //
+    //   // Assuming the server returns a JWT token
+    //   const accessToken = data.accessToken;
+    //
+    //   // Store the token in a secure way (e.g., HttpOnly cookie)
+    //   Cookies.set("access_token", accessToken, { secure: true, sameSite: "Strict" });
+    //
+    //   // Optionally, you may want to store the expiration time and refresh token as well
+    //
+    //   // Update UI or navigate to authenticated pages
+    //   console.log("Login successful!");
+    // } catch (error) {
+    //   console.error("Login failed", error);
+    // }
+  };
+
+
+</script>
+
+</body>
+</html>
+
