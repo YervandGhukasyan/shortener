@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Shortener</title>
+  <link rel="stylesheet" href="/styles/index.css">
+</head>
+<body>
+
+<div class="parent-container">
+
+  <div class="container">
+    <header>URL Shortener</header>
+    <form class="url form">
+      <input type="text" id="originalUrl" required placeholder="Enter URL to shorten" />
+      <button type="submit" class="button">Shorten</button>
+
+
+    </form>
+
+    <div class="shortened-url url-item" id="shortenedUrl">
+      <span></span>
+      <button class="copyButton">📋</button>
+    </div>
+  </div>
+
+  <div class="container" id="urls">
+    <header>All urls</header>
+    <div></div>
+  </div>
+
+  <button class="button logoutButton" onclick="logout()">Logout</button>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+
+<script>
+
+  function logout() {
+    Cookies.remove("access_token");
+    globalThis.location.pathname = "login";
+  }
+
+  function isAuthenticated() {
+    const accessToken = Cookies.get("access_token");
+    return !!accessToken;
+  }
+
+
+  function main() {
+    if (!isAuthenticated()) {
+      logout();
+    } else {
+      getUrls();
+    }
+  }
+
+  function sendUrl(originalUrl) {
+    var formData = {
+      url: originalUrl
+    };
+    const accessToken = Cookies.get("access_token");
+
+
+    fetch("/short", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": `Bearer ${accessToken}`
+
+      },
+      body: JSON.stringify(formData)
+    })
+      .then(response => response.json())
+      .then(data => {
+
+        document.querySelector("#shortenedUrl span").textContent = data?.url
+        document.querySelector(".url-item").addEventListener('click', () => copyUrl(data?.url))
+
+        data
+        renderShortenedUrls({
+          visitCount: data.data.visitCount,
+          short: data?.url,
+        })
+
+
+
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
+
+  function getUrls() {
+    const accessToken = Cookies.get("access_token");
+    fetch("/short", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": `Bearer ${accessToken}`
+
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        for (let i = 0; i < data.length; i++) {
+
+          renderShortenedUrls(data[i]);
+        }
+
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
+  function renderShortenedUrls(shortenedUrl) {
+
+    const urlItem = document.createElement('div')
+    urlItem.classList.add("url-item")
+    urlItem.addEventListener('click', () => copyUrl(shortenedUrl.short))
+
+    const copyButton = document.createElement('button')
+    copyButton.classList.add("copyButton")
+
+    copyButton.textContent = '📋'
+
+
+    const viewCount = document.createElement('div')
+    viewCount.textContent = `👁 ${shortenedUrl.visitCount}`
+
+    const urlSpan = document.createElement('span')
+    urlSpan.textContent = shortenedUrl.short
+
+
+    urlItem.appendChild(viewCount)
+    urlItem.appendChild(urlSpan)
+    urlItem.appendChild(copyButton)
+
+
+    document.querySelector("#urls div").prepend(urlItem);
+
+
+
+    // document.getElementById("shortenedUrl").innerText = "Shortened URL: " + shortenedUrl;
+  }
+
+
+  // globalThis.document.querySelector("body").addEventListener("load", main);
+  main();
+</script>
+
+<script>
+
+
+  const urlForm = document.querySelector(".url.form")
+
+
+  urlForm.addEventListener("submit", (e) => {
+    e.preventDefault()
+    const url = document.querySelector("#originalUrl").value
+    sendUrl(url)
+  })
+
+  function copyUrl(url) {
+    globalThis.navigator.clipboard.writeText(url)
+  }
+
+</script>
+
+</body>
+</html>
+

@@ -41,8 +41,6 @@ $ npm run start
 # watch mode
 $ npm run start:dev
 
-# production mode
-$ npm run start:prod
 ```
 
 ## Test
@@ -58,16 +56,15 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Support
+## Pre requirements
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+# You must have PostgreSQL in your investments
+# easiest way is to run from docker
+https://www.docker.com/blog/how-to-use-the-postgres-docker-official-image/
 
-## Stay in touch
+# You must change .env, src/app.module.ts and config/config.json by your credentials
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```
 
-## License
 
-Nest is [MIT licensed](LICENSE).
