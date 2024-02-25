@@ -34,7 +34,7 @@ $ npm run test:cov
 
 ```bash
 # You must have PostgreSQL installed in your investments
-# easiest way is to run from docker
+# Easiest way is to run from docker
 https://www.docker.com/blog/how-to-use-the-postgres-docker-official-image/
 
 # You must change .env, src/app.module.ts and config/config.json by your credentials
