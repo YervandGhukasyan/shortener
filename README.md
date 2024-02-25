@@ -38,6 +38,9 @@ $ npm run test:cov
 https://www.docker.com/blog/how-to-use-the-postgres-docker-official-image/
 
 # You must change .env, src/app.module.ts and config/config.json by your credentials
+#After that you must run
+npx sequelize-cli db:migrate 
+# to migrate tables
 
 ```
 
